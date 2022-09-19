@@ -24,7 +24,7 @@ public class DBExpert {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url,"hr","hr");
 			pstmt = con.prepareStatement(select);
-			pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				book = new Book();
 				book.setId(rs.getString(1));
