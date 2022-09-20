@@ -15,7 +15,7 @@
 		<jsp:include page="header.jsp"></jsp:include>
 	<section>
 		<div align="center">
-			<form action="">
+			<form action="putUpdate.do" method="post">
 				<table border="1">
 					<tr>
 						<th>도서번호</th>
@@ -31,9 +31,15 @@
 							<select name="WRITER">
 								<%
 									for(String n : name){
+										if(n.equals(b.getA_name())){
+								%>
+								<option selected="selected"><%= n %></option>
+								<%
+										}else{
 								%>
 								<option><%= n %></option>
 								<%
+										}
 									}
 								%>
 							</select>

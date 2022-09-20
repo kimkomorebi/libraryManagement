@@ -11,10 +11,34 @@ public class DBExpert {
 	final String url ="jdbc:oracle:thin:@localhost:1521/xe";
 	
 	
-	public boolean updateBookInfo(Book b) {
-		String update = "update books_tbl set name=?"
-		+ " publisher=?, price=?, to_date(?, 'YYYYMMDD')"
-		+ " where = ?";
+	public boolean putUpdateBw(String SearchWriter, String id) {
+		String update = "update bw_tbl set w_no = ? where b_id = ?";
+		Connection con = null; PreparedStatement pstmt = null;
+		boolean result = false;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url,"hr","hr");
+			pstmt = con.prepareStatement(update);
+			pstmt.setString(1, SearchWriter);
+			pstmt.setString(2, id);
+			pstmt.executeUpdate();
+			con.commit();
+			result = true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				con.close();
+			}catch(Exception e) {}
+		}
+		return result;
+	}
+	
+	public boolean putupdateBookInfo(Book b) {
+		String update = "update books_tbl set name=?,"
+		+ "publisher=?, price=?, p_date = to_date(?, 'YYYY/MM/DD')"
+		+ " where id = ?";
 		boolean result = false;
 		Connection con = null; PreparedStatement pstmt = null;
 		try {
@@ -25,13 +49,16 @@ public class DBExpert {
 			pstmt.setString(2, b.getPublisher());
 			pstmt.setInt(3, b.getPrice());
 			pstmt.setString(4, b.getP_date());
+			pstmt.setString(5, b.getId());
 			pstmt.executeUpdate();
+			con.commit();
 			result = true;
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}finally {
 			try {
-				
+				pstmt.close();
+				con.close();
 			}catch(Exception e) {}
 		}
 		return result;
