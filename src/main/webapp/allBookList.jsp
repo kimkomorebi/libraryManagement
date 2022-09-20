@@ -27,9 +27,9 @@
 				<%
 					for(Book b : book){
 				%>
-			<form action="" method="">
+			<form action="bookUpdate.do" method="post">
 				<tr>
-					<td><%= b.getId() %></td>
+					<td><input type="hidden" name="ID" value="<%= b.getId() %>"/><%= b.getId() %></td>
 					<td><%= b.getB_name() %></td>
 					<td><%= b.getA_name() %></td>
 					<td><%= b.getPublisher() %></td>

@@ -11,6 +11,94 @@ public class DBExpert {
 	final String url ="jdbc:oracle:thin:@localhost:1521/xe";
 	
 	
+	public boolean updateBookInfo(Book b) {
+		String update = "update books_tbl set name=?"
+		+ " publisher=?, price=?, to_date(?, 'YYYYMMDD')"
+		+ " where = ?";
+		boolean result = false;
+		Connection con = null; PreparedStatement pstmt = null;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url,"hr","hr");
+			pstmt = con.prepareStatement(update);
+			pstmt.setString(1, b.getB_name());
+			pstmt.setString(2, b.getPublisher());
+			pstmt.setInt(3, b.getPrice());
+			pstmt.setString(4, b.getP_date());
+			pstmt.executeUpdate();
+			result = true;
+		}catch(Exception e) {
+			
+		}finally {
+			try {
+				
+			}catch(Exception e) {}
+		}
+		return result;
+	}
+	
+	public Book getUpdateBookList(String id) {
+		String select = "select b.id, b.name, w.name, b.publisher, b.price, to_char(b.p_date, 'YYYY/MM/DD')"
+				+ " from books_tbl b, writers_tbl w, bw_tbl bw"
+				+ " where bw.w_no = w.no"
+				+ " and bw.b_id = b.id"
+				+" and b.id = ?";
+		Book book = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url,"hr","hr");
+			pstmt = con.prepareStatement(select);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				book = new Book();
+				book.setId(rs.getString(1));
+				book.setB_name(rs.getString(2));
+				book.setA_name(rs.getString(3));
+				book.setPublisher(rs.getString(4));
+				book.setPrice(rs.getInt(5));
+				book.setP_date(rs.getString(6));
+			}
+		}catch(Exception e) {
+			
+		}finally {
+			try {
+				rs.close(); pstmt.close(); con.close();
+			}catch(Exception e) {}
+		}
+		return book;
+	}
+	
+	public boolean deleteBookList(String id) {
+		String delete = "delete from books_tbl where id = ?";
+		String delete2 = "delete from bw_tbl where b_id = ?";
+		boolean result = false;
+		Connection con = null; PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url,"hr","hr");
+			pstmt2 = con.prepareStatement(delete2);
+			pstmt2.setString(1, id);
+			pstmt2.executeUpdate();
+			pstmt = con.prepareStatement(delete);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			con.commit();
+			result = true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt2.close(); pstmt.close(); con.close();
+			}catch(Exception e) {}
+		}
+		return result;
+	}
+	
 	
 	public boolean putBwInfo(String booknum, String writer) {
 		String insert = "insert into bw_tbl values(?,?)";

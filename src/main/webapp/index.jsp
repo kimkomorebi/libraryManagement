@@ -8,11 +8,12 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-
 	<section>
-		<form action="bookList.do" method="post">
-			<input type="submit" value="도서 목록"/>
-		</form>
+		<div align="center">
+			<form action="bookList.do" method="post">
+				<input type="submit" value="도서 목록"/>
+			</form>
+		</div>
 	</section>
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
