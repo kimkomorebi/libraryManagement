@@ -10,7 +10,7 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	<section>
 		<div align="center">
-			<form action="bookList.do" method="post">
+			<form action="bookList.do" method="get">
 				<input type="submit" value="도서 목록"/>
 			</form>
 		</div>

@@ -54,9 +54,9 @@ public class BookPutUpdateServlet extends HttpServlet {
 		boolean result2 = dbe.putUpdateBw(searchWriter, id);
 		System.out.println("업데이트");
 		if(result && result2) {
-			
+			response.sendRedirect("bookUpdateResult.jsp?R=Y");
 		}else {
-			
+			response.sendRedirect("bookUpdateResult.jsp?R=N");
 		}
 	}
 

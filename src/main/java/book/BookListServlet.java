@@ -19,15 +19,16 @@ public class BookListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//request.setCharacterEncoding("EUC-KR");
 		DBExpert dbe = new DBExpert();
 		ArrayList<Book> book = dbe.getAllBook();
 		request.setAttribute("BOOK", book);
 		RequestDispatcher rd = request.getRequestDispatcher("allBookList.jsp");
 		rd.forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		
 	}
 
